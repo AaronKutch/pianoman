@@ -161,7 +161,7 @@ def omr_semantic_parse(input):
 
         if midi_num >= 0 and relative_time > 0:
             # insert a note
-            ns.append(Note(current_time, current_time + relative_time, midi_num))
+            ns.append(Note(current_time, relative_time, midi_num))
             current_time += relative_time
         elif relative_time > 0:
             # add to current time
