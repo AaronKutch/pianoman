@@ -113,6 +113,35 @@ def figure_multiplier(s):
     else:
         return 0.0
 
+def note_handler(t):
+    lut = {
+        'C': 0,
+        'D': 2,
+        'E': 4,
+        'F': 5,
+        'G': 7,
+        'A': 9,
+        'B': 11,
+    }
+    i = 0
+    # the default values to indicate that note parsing failed
+    midi_num = -1
+    relative_time = 0
+    if t[i] in lut:
+        midi_num = lut[t[i]]
+        i += 1
+        if t[i] == 'b':
+            midi_num -= 1
+            i += 1
+        elif t[i] == '#':
+            midi_num += 1
+            i += 1
+        octave = int(t[i])
+        midi_num += ((octave + 1)*12)
+        i += 2 # skip the underscore
+        relative_time = figure_multiplier(t[i:len(t)])
+    return (midi_num, relative_time)
+
 # Parses a string `s` assumed to be in the semantic format from the paper "End-to-End Neural Optical
 # Music Recognition of Monophonic Scores". Note that times are normalized so that a quarter note
 # takes 1.0 time.
@@ -132,43 +161,24 @@ def omr_semantic_parse(input):
 
         midi_num = -1
         relative_time = 0
+        gracenote = False
         if (len(t) > 5) and (t[:4] == "rest"):
             relative_time = figure_multiplier(t[5:len(t)])
         elif (len(t) >= 9) and t[:9] == "multirest":
             # TODO fix this to respect time signatures other than 4/4 and to handle the integer
             relative_time = 4.0
-        # TODO handle "gracenote" (which do not contribute to `current_time`)
-        elif (len(t) > 8) and t[:4] == "note":
-            lut = {
-                'C': 0,
-                'D': 2,
-                'E': 4,
-                'F': 5,
-                'G': 7,
-                'A': 9,
-                'B': 11,
-            }
-            i = 5
-            if t[i] in lut:
-                midi_num = lut[t[i]]
-                i += 1
-                if t[i] == 'b':
-                    midi_num -= 1
-                    i += 1
-                elif t[i] == '#':
-                    midi_num += 1
-                    i += 1
-                octave = int(t[i])
-                midi_num += ((octave + 1)*12)
-                i += 2 # skip the underscore
-                relative_time = figure_multiplier(t[i:len(t)])
-            else:
-                print("warning: note is not parsing")
+        elif (len(t) > 8) and t[:5] == "note-":
+            (midi_num, relative_time) = note_handler(t[5:])
+        elif (len(t) > 13) and t[:10] == "gracenote-":
+            (midi_num, relative_time) = note_handler(t[10:])
+            gracenote = True
 
         if midi_num >= 0 and relative_time > 0:
             # insert a note
             ns.append(Note(current_time, relative_time, midi_num))
-            current_time += relative_time
+            if not gracenote:
+                # gracenotes are currently handled by not adding to `current_time`
+                current_time += relative_time
         elif relative_time > 0:
             # add to current time
             current_time += relative_time
