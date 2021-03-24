@@ -4,7 +4,7 @@ input_str = """clef-F4, keySignature-EM, timeSignature-C, rest-quarter, rest-eig
 note-E3_eighth, note-E3_eighth, note-D#3_eighth,note-C#3_eighth, barline, note-A3_quarter,
 rest-eighth, note-A3_eighth,note-D#3_eighth, note-D#3_eighth, note-E3_eighth, note-F#3_eighth,
 barline, note-B#2_eighth, rest-sixteenth, note-B2_sixteenth, note-B2_eighth,note-C#3_eighth,
-note-D#3_eighth, note-D#3_eighth, note-G#3_eighth,note-D#3_eighth, barline"""
+note-D#3_eighth, note-D#3_eighth, note-G#3_eighth,note-D#3_eighth._fermata, barline"""
 
 space_str = []
 for i in range(len(input_str)):

@@ -66,14 +66,12 @@ class NoteStruct:
             heapq.heappush(q, tmp[0])
             heapq.heappush(q, tmp[1])
         v = []
-        for i in range(len(q)):
+        for _ in range(len(q)):
             v.append(heapq.heappop(q))
         return v
 
 def figure_multiplier(s):
     # figures
-    # note: multiple `.` can be attached to modify them.
-    # note: these can have `_fermata` attached (after the dot), but ignore that of course
     lut = {
         "quadruple_whole": 4.0,
         "double_whole": 2.0,
@@ -88,15 +86,23 @@ def figure_multiplier(s):
         "two_hundred_fifty_six": 0.00390625
     }
 
+    last = len(s)
+
+    # ignore any attached `_fermata`, which comes after the dots
+    if len(s) >= 8:
+        if s[(len(s) - 8):len(s)] == "_fermata":
+            last -= 8
+
     # count the number of dots on the note
     dots = 0
-    for i in range(len(s)):
-        if s[len(s) - i - 1] == '.':
+    for i in range(0, last):
+        if s[last - i - 1] == '.':
             dots += 1
+            last -= 1
         else:
             break
 
-    s2 = s[:(len(s) - dots)]
+    s2 = s[:last]
     if s2 in lut:
         mul = lut[s2]
         corrected_mul = mul
@@ -112,8 +118,8 @@ def figure_multiplier(s):
 # takes 1.0 time.
 def omr_semantic_parse(input):
     ns = []
-    input_i = 0;
-    current_time = 0;
+    input_i = 0
+    current_time = 0
     while True:
         # token
         t = ""
