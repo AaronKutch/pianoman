@@ -1,3 +1,5 @@
+import midi
+
 import heapq
 from enum import Enum
 
@@ -70,6 +72,7 @@ class NoteStruct:
             v.append(heapq.heappop(q))
         return v
 
+# used by the omr parser for note lengths
 def figure_multiplier(s):
     # figures
     lut = {
@@ -113,6 +116,7 @@ def figure_multiplier(s):
     else:
         return 0.0
 
+# used by the omr parser to convert notes in letter form to midi numbers
 def note_handler(t):
     lut = {
         'C': 0,
@@ -186,3 +190,25 @@ def omr_semantic_parse(input):
         if input_i == len(input):
             break
     return ns
+
+"""
+Given a path to a `.mid` file, this will return a keyaction list
+"""
+def midi_parse(path):
+    pattern = midi.read_midifile("music_ir/example_midis/MarbleMachineRightHand.mid")
+    beats_per_tick = 1.0 / 1000.0
+    actionlist = []
+    acc_time = 0
+    for track in pattern:
+        for event in track:
+            if isinstance(event, midi.events.NoteOnEvent):
+                t = beats_per_tick * event.tick
+                acc_time += t
+                action = KeyAction(acc_time, True, event.data[0])
+                actionlist.append(action)
+            if isinstance(event, midi.events.NoteOffEvent):
+                t = beats_per_tick * event.tick
+                acc_time += t
+                action = KeyAction(acc_time, False, event.data[0])
+                actionlist.append(action)
+    return actionlist
