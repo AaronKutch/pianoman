@@ -24,6 +24,10 @@ required by this repository, it basically consists of setting up a virtual envir
 from source, running `sudo apt install ffmpeg libsm6 libxext6 -y` to install obscure dependencies
 for opencv, installing `tensorflow` 1.15.5, and installing `opencv-python` 4.5.1.48.
 
+Finally, the OMR requires unzipping the semantic model from
+https://grfia.dlsi.ua.es/primus/models/PrIMuS/Semantic-Model.zip and installing it into a
+`tf-end-to-end/Models/` folder.
+
 The MIDI converter requires a specific branch of `python-midi`.
 ```
 git clone https://github.com/big-c-note/python-midi.git
