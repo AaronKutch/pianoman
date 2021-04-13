@@ -1,0 +1,4 @@
+[submodule "tf-end-to-end"]
+	path = tf-end-to-end
+	url = https://github.com/AaronKutch/tf-end-to-end.git
+	branch = aaron

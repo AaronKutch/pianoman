@@ -12,6 +12,22 @@ This repository is structured into different folders for different components
 
 ## Dependencies
 
+The OMR requires opencv and the `tf-end-to-end` submodule. Run `git submodule update --init` to
+initialize the `tf-end-to-end` git submodule. The "Dependencies" section in `tf-end-to-end`
+describes how to install the needed dependencies, and this whole repository should be moved inside
+the `python3_7_root` folder created by the process (or you must find some way to run this repository
+with Python3.7). Ignore the rest that starts with cloning `tf-end-to-end`, because it is intended
+only for standalone `tf-end-to-end`.
+
+In case you can't find the custom branch of `tf-end-to-end` with the "Dependencies" section
+required by this repository, it basically consists of setting up a virtual environment for Python3.7
+from source, running `sudo apt install ffmpeg libsm6 libxext6 -y` to install obscure dependencies
+for opencv, installing `tensorflow` 1.15.5, and installing `opencv-python` 4.5.1.48.
+
+Finally, the OMR requires unzipping the semantic model from
+https://grfia.dlsi.ua.es/primus/models/PrIMuS/Semantic-Model.zip and installing it into a
+`tf-end-to-end/Models/` folder.
+
 The MIDI converter requires a specific branch of `python-midi`.
 ```
 git clone https://github.com/big-c-note/python-midi.git
