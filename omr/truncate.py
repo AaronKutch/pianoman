@@ -1,3 +1,7 @@
+# This script requires the input image to have been taken with the staff lines at the center and
+# and almost perfectly horizontal. If the script truncates too much, take the image from farther
+# away.
+
 import cv2
 import numpy as np
 
