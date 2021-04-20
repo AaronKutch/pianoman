@@ -6,7 +6,7 @@ import time
 from adafruit_servokit import ServoKit
 kit = ServoKit(channels=16)
 
-tempoScale = 2.0
+tempoScale = 1.0
 # initializing the titles and rows list
 
 restAngle = [85,75,70,80,65,75,110,80,75,70,60,75,60];
@@ -55,8 +55,6 @@ def parser():
         # extracting each data row one by one
         for row in csvreader:
             rows.append(row)
-
-    print(rows)
 
     for row in rows:
         # parsing each column of a row
@@ -169,7 +167,7 @@ def parser():
             #print(row[1])
 
 def playKey(timeList, servoID):
-    print("Here " + str(servoID) + "\n")
+    #print("Here " + str(servoID) + "\n")
     on = False
     previousTime = 0
     for timeStamp in timeList:
@@ -246,7 +244,6 @@ def main():
     for i in range(0,12):
         kit.servo[i].angle = restAngle[i];
     print("done")
-    print(g_list)
 
 #print(g_list,f_list,e_list,d_list,b_list,a_list,c_list)
 main()
