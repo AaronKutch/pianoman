@@ -4,7 +4,7 @@ from adafruit_servokit import ServoKit
 kit = ServoKit(channels=16)
 
 restAngle = [85,75,70,80,65,75,90,80,75,70,60,75,60];
-playAngle = [100,95,90,100,80,90,110,95,125,85,85,90,80];
+playAngle = [100,95,90,100,80,90,120,95,125,85,85,90,80];
 
 #Just reset
 servoTesting = [];

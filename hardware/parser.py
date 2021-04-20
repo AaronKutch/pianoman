@@ -2,7 +2,7 @@
 import csv
 
 # csv file name
-filename = "mmrh.csv"
+filename = "music_ir/ir_csv/output.csv"
 
 # initializing the titles and rows list
 

@@ -44,7 +44,7 @@ class Note:
     def get_actions(self) -> (KeyAction, KeyAction):
         return (
             KeyAction(self.start_time, True, self.midi_num),
-            KeyAction(self.start_time + self.duration, False, self.midi_num)
+            KeyAction(self.start_time + (self.duration * 0.9), False, self.midi_num)
         )
 
 """

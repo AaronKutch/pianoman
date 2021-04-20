@@ -32,8 +32,25 @@ The MIDI converter requires a specific branch of `python-midi`.
 ```
 git clone https://github.com/big-c-note/python-midi.git
 cd python-midi
-git checkout big-c-note/hotfix/fix-python2-print
+git checkout hotfix/fix-python2-print
+# you may need `sudo apt-get install swig`
 python setup.py install
 # this should work as an example
 mididump.py mary.mid
 ```
+
+The hardware part requires `pip install adafruit-circuitpython-servokit`
+
+## Running
+
+# Take an image with the staff lines horizontal and in the middle with this script
+# (or alternatively save an image to `omr/images/input.png`)
+python hardware/camera_test.py
+
+# run these
+python omr/binarize.py
+python omr/truncate.py
+# ignore the load errors which are actually just warnings
+python tf-end-to-end/ctc_predict.py -image ./omr/images/truncated.png -model ./tf-end-to-end/Models/semantic_model.meta -vocabulary ./tf-end-to-end/Data/vocabulary_semantic.txt > music_ir/ir_csv/input.txt
+python music_ir/omr_to_csv.py
+python hardware/pianoman.py
