@@ -6,11 +6,11 @@ import time
 from adafruit_servokit import ServoKit
 kit = ServoKit(channels=16)
 
-tempoScale = 1.0
+tempoScale = 0.8
 # initializing the titles and rows list
 
-restAngle = [85,75,70,80,65,75,110,80,75,70,60,75,60];
-playAngle = [100,95,90,100,80,90,137,95,125,85,85,90,80];
+restAngle = [85,75,70,80,65,75,110,80,75,70,60,75,60]
+playAngle = [100,95,90,100,80,90,137,95,125,85,85,90,80]
 
 c_list  = []
 cs_list = []
