@@ -1,6 +1,6 @@
 from music_ir import midi_parse
 
-actionlist = midi_parse("music_ir/example_midis/mhall.mid")
+actionlist = midi_parse("music_ir/example_midis/mary.mid")
 
 f = open('./music_ir/ir_csv/output.csv', 'w+')
 f.write("is_press,time,midi_num\n")

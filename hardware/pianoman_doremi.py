@@ -6,7 +6,8 @@ import time
 from adafruit_servokit import ServoKit
 kit = ServoKit(channels=16)
 
-tempoScale = 2.0
+tempoScale = 0.15
+
 # initializing the titles and rows list
 
 restAngle = [85,75,70,80,65,75,110,80,75,70,60,75,60]
@@ -43,7 +44,7 @@ def parser():
 
 
     # csv file name
-    filename = "music_ir/ir_csv/output.csv"
+    filename = "music_ir/ir_csv/DoReMi.csv"
     rows = []
     
     # reading csv file

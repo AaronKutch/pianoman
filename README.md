@@ -19,6 +19,9 @@ the `python3_7_root` folder created by the process (or you must find some way to
 with Python3.7). Ignore the rest that starts with cloning `tf-end-to-end`, because it is intended
 only for standalone `tf-end-to-end`.
 
+The Python3.7 virtual environment must source the `bin/activate` binary so that all the python
+commands only require `python ...` instead of `python3 ...`
+
 In case you can't find the custom branch of `tf-end-to-end` with the "Dependencies" section
 required by this repository, it basically consists of setting up a virtual environment for Python3.7
 from source, running `sudo apt install ffmpeg libsm6 libxext6 -y` to install obscure dependencies
