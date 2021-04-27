@@ -19,6 +19,9 @@ the `python3_7_root` folder created by the process (or you must find some way to
 with Python3.7). Ignore the rest that starts with cloning `tf-end-to-end`, because it is intended
 only for standalone `tf-end-to-end`.
 
+The Python3.7 virtual environment must source the `bin/activate` binary so that all the python
+commands only require `python ...` instead of `python3 ...`
+
 In case you can't find the custom branch of `tf-end-to-end` with the "Dependencies" section
 required by this repository, it basically consists of setting up a virtual environment for Python3.7
 from source, running `sudo apt install ffmpeg libsm6 libxext6 -y` to install obscure dependencies
@@ -32,8 +35,25 @@ The MIDI converter requires a specific branch of `python-midi`.
 ```
 git clone https://github.com/big-c-note/python-midi.git
 cd python-midi
-git checkout big-c-note/hotfix/fix-python2-print
+git checkout hotfix/fix-python2-print
+# you may need `sudo apt-get install swig`
 python setup.py install
 # this should work as an example
 mididump.py mary.mid
 ```
+
+The hardware part requires `pip install adafruit-circuitpython-servokit`
+
+## Running
+
+# Take an image with the staff lines horizontal and in the middle with this script
+# (or alternatively save an image to `omr/images/input.png`)
+python hardware/camera_test.py
+
+# run these
+python omr/binarize.py
+python omr/truncate.py
+# ignore the load errors which are actually just warnings
+python tf-end-to-end/ctc_predict.py -image ./omr/images/truncated.png -model ./tf-end-to-end/Models/semantic_model.meta -vocabulary ./tf-end-to-end/Data/vocabulary_semantic.txt > music_ir/ir_csv/input.txt
+python music_ir/omr_to_csv.py
+python hardware/pianoman.py

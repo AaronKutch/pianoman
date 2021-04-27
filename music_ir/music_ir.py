@@ -44,7 +44,7 @@ class Note:
     def get_actions(self) -> (KeyAction, KeyAction):
         return (
             KeyAction(self.start_time, True, self.midi_num),
-            KeyAction(self.start_time + self.duration, False, self.midi_num)
+            KeyAction(self.start_time + (self.duration * 0.9), False, self.midi_num)
         )
 
 """
@@ -195,7 +195,7 @@ def omr_semantic_parse(input):
 Given a path to a `.mid` file, this will return a keyaction list
 """
 def midi_parse(path):
-    pattern = midi.read_midifile("music_ir/example_midis/MarbleMachineRightHand.mid")
+    pattern = midi.read_midifile(path)
     beats_per_tick = 1.0 / 1000.0
     actionlist = []
     acc_time = 0
